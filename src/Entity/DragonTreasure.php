@@ -48,10 +48,15 @@ class DragonTreasure
     private ?int $coolFactor = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $plunderedAt = null;
+    private ?\DateTimeImmutable $plunderedAt;
 
     #[ORM\Column]
     private ?bool $isPublished = null;
+
+    public function __construct()
+    {
+        $this->plunderedAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -109,13 +114,6 @@ class DragonTreasure
     public function getPlunderedAt(): ?\DateTimeImmutable
     {
         return $this->plunderedAt;
-    }
-
-    public function setPlunderedAt(\DateTimeImmutable $plunderedAt): self
-    {
-        $this->plunderedAt = $plunderedAt;
-
-        return $this;
     }
 
     public function getIsPublished(): ?bool
