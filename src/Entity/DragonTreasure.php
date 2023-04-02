@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DragonTreasureRepository::class)]
 #[ApiResource(
     description: 'A rare and valuable treasure.',
+    shortName: 'Treasures',
     operations: [
-        new Get(),
-        new GetCollection(),
+        new Get(uriTemplate: '/dragon-plunder/{id}'),
+        new GetCollection(uriTemplate: '/dragon-plunder'),
         new Post(),
         new Patch(),
         new Put(),
-        new Delete(),
     ],
 )]
 class DragonTreasure
