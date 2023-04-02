@@ -117,11 +117,12 @@ class DragonTreasure
         return $this->plunderedAt;
     }
 
+    /**
+     * Human readable representation of when the treasure was plundered.
+     */
     public function getPlunderedAgo(): ?string
     {
-        $agoCarbon = new Carbon($this->plunderedAt);
-        $agoText = $agoCarbon->ago();
-        return $agoText;
+        return Carbon::instance($this->plunderedAt)->diffForHumans();
     }
 
     public function getIsPublished(): ?bool
