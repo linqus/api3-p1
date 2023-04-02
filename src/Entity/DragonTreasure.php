@@ -18,8 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
     description: 'A rare and valuable treasure.',
     shortName: 'Treasures',
     operations: [
-        new Get(uriTemplate: '/dragon-plunder/{id}'),
-        new GetCollection(uriTemplate: '/dragon-plunder'),
+        new Get(),
+        new GetCollection(),
         new Post(),
         new Patch(),
         new Put(),
@@ -48,7 +48,7 @@ class DragonTreasure
     private ?int $coolFactor = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $plunderedAt = null;
 
     #[ORM\Column]
     private ?bool $isPublished = null;
@@ -75,9 +75,9 @@ class DragonTreasure
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setTextDescription(string $description): self
     {
-        $this->description = $description;
+        $this->description = nl2br($description);
 
         return $this;
     }
@@ -106,14 +106,14 @@ class DragonTreasure
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getPlunderedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->plunderedAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setPlunderedAt(\DateTimeImmutable $plunderedAt): self
     {
-        $this->createdAt = $createdAt;
+        $this->plunderedAt = $plunderedAt;
 
         return $this;
     }
