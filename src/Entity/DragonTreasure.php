@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -32,9 +34,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
     ],
     denormalizationContext: [
         'groups' => ['treasure:write']
-    ]
+    ],
+    paginationItemsPerPage: 10,
+
 
 )]
+#[ApiFilter(BooleanFilter::class, properties:['isPublished'])]
 class DragonTreasure
 {
     #[ORM\Id]
@@ -65,6 +70,7 @@ class DragonTreasure
     private ?\DateTimeImmutable $plunderedAt;
 
     #[ORM\Column]
+    //#[ApiFilter(BooleanFilter::class)]
     private bool $isPublished = false;
 
     public function __construct(string $name)
