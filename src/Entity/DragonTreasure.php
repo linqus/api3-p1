@@ -60,7 +60,7 @@ class DragonTreasure
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['treasure:read', 'treasure:write', 'dragon:read'])]
+    #[Groups(['treasure:read', 'treasure:write', 'dragon:read', 'dragon:write'])]
     #[ApiFilter(SearchFilter::class, strategy: SearchFilter::STRATEGY_PARTIAL)]
     #[Assert\NotBlank()]
     #[Assert\Length(min: 2, max: 50, maxMessage: 'Describe treasure in 50 characters or less')]
@@ -76,7 +76,7 @@ class DragonTreasure
      * Estimated value of a treasure in gold coins
      */
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write', 'dragon:read'])]
+    #[Groups(['treasure:read', 'treasure:write', 'dragon:read', 'dragon:write'])]
     #[ApiFilter(RangeFilter::class)]
     #[Assert\GreaterThanOrEqual(0)]
     private ?int $value = 0;
@@ -136,7 +136,7 @@ class DragonTreasure
         return $this;
     }
  
-    #[Groups('treasure:write')]
+    #[Groups('treasure:write', 'dragon:write')]
     #[SerializedName('description')]
     public function setTextDescription(string $description): self
     {
