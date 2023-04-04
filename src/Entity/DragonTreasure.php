@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
@@ -50,7 +51,20 @@ use function Symfony\Component\String\u;
         'jsonhal' => 'application/hal+json',
     ],
 )]
-// #[ApiFilter(BooleanFilter::class, properties:['isPublished'])]
+#[ApiResource(
+    shortName: 'Treasures',
+    uriTemplate: '/dragons/{dragon_id}/treasures.{_format}',
+    uriVariables: [
+        'dragon_id' => new Link(
+            fromProperty: 'dragonTreasures',
+            fromClass: User::class,
+        )
+    ],
+    operations: [new GetCollection()],
+    normalizationContext: [
+        'groups' => ['treasure:read'],
+    ],
+)]
 #[ApiFilter(PropertyFilter::class)]
 #[ApiFilter(SearchFilter::class, 
             properties:['ownedBy.username' => SearchFilter::STRATEGY_PARTIAL],

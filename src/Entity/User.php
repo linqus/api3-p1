@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Link;
 use ApiPlatform\Serializer\Filter\PropertyFilter;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,6 +26,20 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     denormalizationContext: [
         'groups' => ['dragon:write'],
+    ],
+)]
+#[ApiResource(
+    shortName: 'Dragons',
+    operations: [new Get()],
+    uriTemplate: '/treasures/{treasure_id}/owner.{_format}',
+    uriVariables: [
+        'treasure_id' => new Link(
+            fromClass: DragonTreasure::class,
+            fromProperty: 'ownedBy',
+        ),
+    ],
+    normalizationContext: [
+        'groups' => ['dragon:read'],
     ],
 )]
 #[UniqueEntity(fields: ['email'], message: 'There is already user with such email')]
