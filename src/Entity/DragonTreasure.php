@@ -20,6 +20,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use function Symfony\Component\String\u;
 
@@ -61,11 +62,14 @@ class DragonTreasure
     #[ORM\Column(length: 255)]
     #[Groups(['treasure:read', 'treasure:write'])]
     #[ApiFilter(SearchFilter::class, strategy: SearchFilter::STRATEGY_PARTIAL)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 50, maxMessage: 'Describe treasure in 50 characters or less')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups('treasure:read')]
     #[ApiFilter(SearchFilter::class, strategy: SearchFilter::STRATEGY_PARTIAL)]
+    #[Assert\NotBlank()]
     private ?string $description = null;
 
     /**
@@ -74,12 +78,15 @@ class DragonTreasure
     #[ORM\Column]
     #[Groups(['treasure:read', 'treasure:write'])]
     #[ApiFilter(RangeFilter::class)]
-    private ?int $value = null;
+    #[Assert\GreaterThanOrEqual(0)]
+    private ?int $value = 0;
 
     #[ORM\Column]
     #[Groups('treasure:read')]
     #[ApiFilter(RangeFilter::class)]
-    private ?int $coolFactor = null;
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(10)]
+    private ?int $coolFactor = 0;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $plunderedAt;
@@ -88,7 +95,7 @@ class DragonTreasure
     #[ApiFilter(BooleanFilter::class)]
     private bool $isPublished = false;
 
-    public function __construct(string $name)
+    public function __construct(string $name = null)
     {
         $this->name = $name;
         $this->plunderedAt = new \DateTimeImmutable();
