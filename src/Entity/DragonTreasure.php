@@ -117,7 +117,7 @@ class DragonTreasure
         return $this->name;
     }
 
-    #[Groups('treasure:read')]
+    #[Groups(['treasure:read', 'dragon:read'])]
     public function getShortDescription(): ?string
     {
         return u($this->description)->truncate(40,'...');
@@ -136,7 +136,7 @@ class DragonTreasure
         return $this;
     }
  
-    #[Groups('treasure:write', 'dragon:write')]
+    #[Groups(['treasure:write', 'dragon:write'])]
     #[SerializedName('description')]
     public function setTextDescription(string $description): self
     {
