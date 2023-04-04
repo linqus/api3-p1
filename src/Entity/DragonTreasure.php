@@ -98,6 +98,7 @@ class DragonTreasure
     #[ORM\ManyToOne(inversedBy: 'dragonTreasures')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['treasure:read', 'treasure:write'])]
+    #[Assert\Valid()]
     private ?User $ownedBy = null;
 
     public function __construct(string $name = null)
