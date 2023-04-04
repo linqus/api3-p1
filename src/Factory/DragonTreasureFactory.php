@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\DragonTreasure;
+use App\Entity\User;
 use App\Repository\DragonTreasureRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -55,6 +56,7 @@ final class DragonTreasureFactory extends ModelFactory
             'name' => self::faker()->randomElement(self::TREASURE_NAMES),
             'plunderedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('-1 year')),
             'value' => self::faker()->numberBetween(1,150)*1000,
+            'ownedBy' => UserFactory::new(),
         ];
     }
 
