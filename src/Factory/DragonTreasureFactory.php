@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\DragonTreasure;
-use App\Entity\User;
 use App\Repository\DragonTreasureRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
