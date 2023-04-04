@@ -52,6 +52,9 @@ use function Symfony\Component\String\u;
 )]
 // #[ApiFilter(BooleanFilter::class, properties:['isPublished'])]
 #[ApiFilter(PropertyFilter::class)]
+#[ApiFilter(SearchFilter::class, 
+            properties:['ownedBy.username' => SearchFilter::STRATEGY_PARTIAL],
+)]
 class DragonTreasure
 {
     #[ORM\Id]
@@ -99,6 +102,7 @@ class DragonTreasure
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['treasure:read', 'treasure:write'])]
     #[Assert\Valid()]
+    #[ApiFilter(SearchFilter::class, strategy:SearchFilter::STRATEGY_EXACT)]
     private ?User $ownedBy = null;
 
     public function __construct(string $name = null)
